@@ -7,10 +7,10 @@ import { Label } from "../ui/label";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { SignInFormData, signInSchema } from "@/lib/validation/signIn";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+// import { signInWithEmailAndPassword } from "firebase/auth";
+// import { auth } from "@/lib/firebase";
 import { useAppDispatch } from "@/redux/hooks";
-import { setAuthStatus, setUser } from "@/redux/slice/userSlice";
+// import { setAuthStatus, setUser } from "@/redux/slice/userSlice";
 import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
 
@@ -30,21 +30,21 @@ const SignIn = () => {
 
   const onSubmit: SubmitHandler<SignInFormData> = async (data) => {
     try {
-      const { user } = await signInWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password
-      );
+      // const { user } = await signInWithEmailAndPassword(
+      //   auth,
+      //   data.email,
+      //   data.password
+      // );
 
-      dispatch(setAuthStatus(true));
-      dispatch(
-        setUser({
-          _id: user.uid,
-          email: user.email,
-          name: user.displayName,
-          avatar: user.photoURL,
-        })
-      );
+      // dispatch(setAuthStatus(true));
+      // dispatch(
+      //   setUser({
+      //     _id: user.uid,
+      //     email: user.email,
+      //     name: user.displayName,
+      //     avatar: user.photoURL,
+      //   })
+      // );
 
       router.push("/");
       reset();

@@ -40,14 +40,14 @@ const SignUp = () => {
       // });
 
       dispatch(setAuthStatus(true));
-      dispatch(
-        setUser({
-          _id: res.user.uid,
-          name: res.user.displayName,
-          email: res.user.email,
-          avatar: res.user.photoURL,
-        })
-      );
+      // dispatch(
+      //   setUser({
+      //     _id: res.user.uid,
+      //     name: res.user.displayName,
+      //     email: res.user.email,
+      //     avatar: res.user.photoURL,
+      //   })
+      // );
       reset();
 
       router.push("/");
