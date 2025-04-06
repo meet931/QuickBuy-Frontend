@@ -109,8 +109,8 @@ const Page = () => {
               )}
               <div>
                 <figure className="sm:w-28 sm:h-28 w-16 h-16">
-                  <Image
-                    src={elm.img}
+                  <Image                  
+                    src={`${process.env.NEXT_PUBLIC_BASE_URL}/${elm.img}`}
                     width={width > 640 ? 100 : 60}
                     height={width > 640 ? 100 : 60}
                     alt={elm.title}

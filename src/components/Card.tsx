@@ -9,30 +9,54 @@ import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addToCart, setTotal } from "@/redux/slice/cartSlice";
 import { useToast } from "./ui/use-toast";
+import { useRouter } from "next/navigation";
 
 const Cards = ({ product }: { product: IProduct }) => {
   const { width } = useDeviceSize();
   const { toast } = useToast();
+  const router = useRouter();
 
-  const {
+  const {    
     _id,
-    price,
-    title,
-    thumbnail,
-    discountPercentage,
+    // price,
+    // title,
+    // thumbnail,
+    // discountPercentage,
+    // rating,
+    // discountPrice,
+    productPrice,
+    finalProductPrice,
+    productName,
+    productImages,
     rating,
-    discountPrice,
   } = product;
 
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();  
+
+  const discountPercentage = Math.round(
+    ((productPrice - finalProductPrice) / productPrice) * 100
+  );
 
   const addToCartHandle = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    dispatch(addToCart({ _id, price, title, img: thumbnail, quantity: 1 }));
-    dispatch(setTotal());
-
-    toast({ title: "Product added in cart" });
+    const token = localStorage.getItem("token");
+    if(token) {
+      dispatch(
+        addToCart({
+          _id,
+          price: finalProductPrice,
+          title: productName,
+          img: productImages?.[0] || "",
+          quantity: 1,
+        })
+      );
+      dispatch(setTotal());
+  
+      toast({ title: "Product added in cart" });
+    } else {
+      router.push("/signin");
+    }
   };
 
   return (
@@ -41,17 +65,17 @@ const Cards = ({ product }: { product: IProduct }) => {
         <CardHeader className="bg-gray-50 aspect-1/85 items-center justify-center p-0">
           <figure className="h-full">
             <Image
-              src={thumbnail}
+              src={`${process.env.NEXT_PUBLIC_BASE_URL}/${productImages[0]}`}
               width={width < 400 ? 100 : 200}
               height={width < 400 ? 100 : 200}
-              alt={title}
+              alt={productName}
               className="brightness-[0.98] w-full h-full object-scale-down p-6"
             />
           </figure>
         </CardHeader>
         <CardContent className="md:p-4 md:pb-0 p-2 pb-0">
           <p className="">
-            {title.length > 40 ? title.slice(0, 40) + "..." : title}
+            {productName.length > 40 ? productName.slice(0, 40) + "..." : productName}
           </p>
           <div className="flex items-center">
             <span className="text-[#f50514] text-sm flex-1">
@@ -60,9 +84,9 @@ const Cards = ({ product }: { product: IProduct }) => {
             <span>{rating}</span>
           </div>
           <div className="flex items-center py-2 gap-1">
-            <span className="font-medium">{priceFormat(price)}</span>
+            <span className="font-medium">{priceFormat(finalProductPrice)}</span>
             <del className="text-gray-500 text-xs">
-              {discountPrice && priceFormat(discountPrice)}
+              {productPrice && priceFormat(productPrice)}
             </del>
           </div>
         </CardContent>

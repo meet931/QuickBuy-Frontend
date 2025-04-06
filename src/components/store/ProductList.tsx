@@ -32,13 +32,13 @@ const ProductList = () => {
           Sort & Filter <Filter strokeWidth={1.25} size={20} />
         </button>
       )}
-      <div className="grid xl:grid-cols-4 lg:grid-cols-3 grid-cols-2 sm:gap-4 gap-2">
-        {allProducts.products.length > 0 ? (
-          allProducts?.products.map((product) => (
+      <div className={allProducts.length > 0 ? "grid xl:grid-cols-4 lg:grid-cols-3 grid-cols-2 sm:gap-4 gap-2": ""}>
+        {allProducts.length > 0 ? (
+          allProducts?.map((product: any) => (
             <Cards product={product} key={product._id} />
           ))
         ) : (
-          <div>Sorry! There is no product related to your query.</div>
+          <div className="text-center p-7">Sorry! There is no product related to your query.</div>
         )}
       </div>
     </div>

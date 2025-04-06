@@ -1,3 +1,5 @@
+import { JSX } from "react";
+
 export interface ICategory {
   _id: string;
   value: string;
@@ -38,9 +40,16 @@ export interface IProduct {
   sizes?: ISize[];
   highlights?: string[];
   discountPrice?: number;
+
+  productPrice: number,
+  finalProductPrice: number,
+  productName: string,
+  productImages: string[],
 }
 
 export interface IAllProducts {
+  length: number;
+  map(arg0: (product: any) => JSX.Element): import("react").ReactNode;
   page: number;
   totalPages: number;
   totalProducts: number;

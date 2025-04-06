@@ -81,37 +81,37 @@ const categories = [
   {
     _id: "64aff204478b0249323b1761",
     label: "Mobiles",
-    value: "Mobiles",
+    value: "Mobile",
     icon: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689255007/ecom/communication_i7nnnm.png",
   },
   {
     _id: "64aff270478b0249323b1764",
     label: "Laptops",
-    value: "Laptops",
+    value: "laptop",
     icon: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689255007/ecom/notebook-computer_zpw7iv.png",
   },
   {
     _id: "64aff368478b0249323b1768",
     label: "Accessories",
-    value: "Accessories",
+    value: "accessory",
     icon: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689255008/ecom/earphones_tb48kt.png",
   },
   {
     _id: "64aff420478b0249323b176b",
     label: "Smart watches",
-    value: "Smart watches",
+    value: "smartWatch",
     icon: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689255007/ecom/smart-watch_qqlxpr.png",
   },
   {
     _id: "64b6865624cf32db35118af8",
     label: "TV & Display",
-    value: "TV & Display",
+    value: "tv",
     icon: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689255007/ecom/smart-tv_cb19bi.png",
   },
   {
     _id: "64c5e5580c06622dfd4f94db",
     label: "Tablet",
-    value: "Tablet",
+    value: "tablet",
     icon: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1690690818/ecom/tablet_inlinb.png",
   },
 ];

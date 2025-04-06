@@ -19,6 +19,7 @@ const nextConfig = {
         hostname: "m.media-amazon.com",
       },
     ],
+    domains: ['localhost'],
   },
 };
 

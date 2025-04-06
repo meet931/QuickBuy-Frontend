@@ -32,6 +32,11 @@ const initialState: InitialState = {
     sizes: [],
     stock: 0,
     type: "",
+    
+    productPrice: 0,
+    finalProductPrice: 0,
+    productName: "",
+    productImages: [],
   },
   allProductLoading: false,
   productLoading: false,

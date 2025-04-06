@@ -7,17 +7,13 @@ import { Label } from "../ui/label";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { SignInFormData, signInSchema } from "@/lib/validation/signIn";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import { signInWithEmailAndPassword } from "firebase/auth";
-// import { auth } from "@/lib/firebase";
-import { useAppDispatch } from "@/redux/hooks";
-// import { setAuthStatus, setUser } from "@/redux/slice/userSlice";
 import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
+import { signIn } from "@/helpers/api";
 
 const SignIn = () => {
   const { toast } = useToast();
   const router = useRouter();
-  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -30,23 +26,28 @@ const SignIn = () => {
 
   const onSubmit: SubmitHandler<SignInFormData> = async (data) => {
     try {
-      // const { user } = await signInWithEmailAndPassword(
-      //   auth,
-      //   data.email,
-      //   data.password
-      // );
+      const signInResponse = await signIn(data);
 
-      // dispatch(setAuthStatus(true));
-      // dispatch(
-      //   setUser({
-      //     _id: user.uid,
-      //     email: user.email,
-      //     name: user.displayName,
-      //     avatar: user.photoURL,
-      //   })
-      // );
-
-      router.push("/");
+      if (signInResponse.statusCode === 200) {
+        const userData = {
+          _id: signInResponse?.data?._id,
+          email: signInResponse?.data?.email,
+        };
+        localStorage.setItem("token", signInResponse?.data?.token);
+        localStorage.setItem("userData", JSON.stringify(userData));
+        toast({
+          title: signInResponse.message,
+          variant: "success",
+        });
+        setTimeout(() => {
+          router.push("/");
+        }, 1000);
+      } else {
+        toast({
+          title: signInResponse.message,
+          variant: "destructive",
+        });
+      }
       reset();
     } catch (err: any) {
       console.log(err);
@@ -62,6 +63,7 @@ const SignIn = () => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+        {/* Email */}
         <div className="grid gap-2">
           <Label htmlFor="email">Email</Label>
           <Input
@@ -74,6 +76,8 @@ const SignIn = () => {
             <p className="text-sm text-red-500">{errors.email.message}</p>
           )}
         </div>
+
+        {/* Password */}
         <div className="grid gap-2 mt-2">
           <Label htmlFor="password">Password</Label>
           <Input
@@ -86,6 +90,8 @@ const SignIn = () => {
             <p className="text-sm text-red-500">{errors.password.message}</p>
           )}
         </div>
+
+        {/* Sign In button */}
         <div className="mt-4">
           <Button
             className="w-full"

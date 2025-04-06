@@ -4,31 +4,24 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import React, { Suspense, useEffect } from "react";
 import Loading from "./loading";
-// import { onAuthStateChanged } from "firebase/auth";
-// import { auth } from "@/lib/firebase";
-// import { useAppDispatch } from "@/redux/hooks";
-// import { setAuthStatus, setUser } from "@/redux/slice/userSlice";
+import { setAuthStatus, setUser } from "@/redux/slice/userSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
+  const { authStatus, user } = useAppSelector((state) => state.user);
 
-  // useEffect(() => {
-  //   const unSub = onAuthStateChanged(auth, async (user) => {
-  //     if (user) {
-  //       dispatch(setAuthStatus(true));
-  //       dispatch(
-  //         setUser({
-  //           _id: user.uid,
-  //           name: user.displayName,
-  //           avatar: user.photoURL,
-  //           email: user.email,
-  //         })
-  //       );
-  //     }
-  //   });
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userData = JSON.parse(localStorage.getItem("userData") || "{}");
 
-  //   return () => unSub();
-  // }, [dispatch]);
+    if (token && userData) {
+      if (authStatus === false) {
+        dispatch(setAuthStatus(true));
+        dispatch(setUser(userData));
+      }
+    }
+  }, [authStatus, user, dispatch]);
 
   return (
     <>

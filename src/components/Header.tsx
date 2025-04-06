@@ -16,6 +16,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { setAuthStatus } from "@/redux/slice/userSlice";
 // import { signOut } from "firebase/auth";
 // import { auth } from "@/lib/firebase";
 // import { setAuthStatus } from "@/redux/slice/userSlice";
@@ -28,7 +29,7 @@ const links = [
   },
   {
     id: 2,
-    path: "/store/mobiles",
+    path: "/store/mobile",
     name: "Mobiles",
   },
   {
@@ -43,8 +44,18 @@ const links = [
   },
   {
     id: 5,
-    path: "/store/accessories",
+    path: "/store/accessory",
     name: "Accessories",
+  },
+  {
+    _id: "6",
+    path: "/store/smartWatch",
+    name: "Smart Watch",    
+  },
+  {
+    _id: "7",
+    path: "/store/tablet",
+    name: "Tablet",    
   },
 ];
 
@@ -54,6 +65,12 @@ const Header = () => {
   const dispatch = useAppDispatch();
   const { totalQuantity } = useAppSelector((state) => state.cart);
   const { authStatus, user } = useAppSelector((state) => state.user);
+console.log(authStatus);
+
+  const handleSignOut = () => {    
+    dispatch(setAuthStatus(false));    
+    localStorage.clear();
+  }
 
   useEffect(() => {
     dispatch(setTotal());
@@ -119,6 +136,7 @@ const Header = () => {
                       // onClick={() => {
                       //   signOut(auth), dispatch(setAuthStatus(false));
                       // }}
+                      onClick={handleSignOut}
                       className="cursor-pointer"
                     >
                       Sign out
@@ -189,6 +207,7 @@ const Header = () => {
                 // onClick={() => {
                 //   signOut(auth), dispatch(setAuthStatus(false));
                 // }}
+                onClick={handleSignOut}
               >
                 Sign Out
               </Button>
