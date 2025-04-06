@@ -9,14 +9,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/redux/hooks";
-import { setAuthStatus, setUser } from "@/redux/slice/userSlice";
+import { signUp } from "@/helpers/api";
 
 const SignUp = () => {
   const { toast } = useToast();
   const router = useRouter();
-
-  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -29,28 +26,24 @@ const SignUp = () => {
 
   const onSubmit: SubmitHandler<SignUpFormData> = async (data) => {
     try {
-      // const res = await createUserWithEmailAndPassword(
-      //   auth,
-      //   data.email,
-      //   data.password
-      // );
+      const signUpResponse = await signUp(data);
 
-      // await updateProfile(res.user, {
-      //   displayName: data.name,
-      // });
+      if (signUpResponse.statusCode === 201) {
+        toast({
+          title: signUpResponse.message,
+          variant: "success",
+        });
+        setTimeout(() => {
+          router.push("/signin");
+        }, 1000);
+      } else {
+        toast({
+          title: signUpResponse.message,
+          variant: "destructive",
+        });
+      }
 
-      dispatch(setAuthStatus(true));
-      // dispatch(
-      //   setUser({
-      //     _id: res.user.uid,
-      //     name: res.user.displayName,
-      //     email: res.user.email,
-      //     avatar: res.user.photoURL,
-      //   })
-      // );
       reset();
-
-      router.push("/");
     } catch (err: any) {
       console.log(err);
       return toast({
@@ -65,18 +58,21 @@ const SignUp = () => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+        {/* Name */}
         <div className="grid gap-2">
-          <Label htmlFor="name">Name</Label>
+          <Label htmlFor="fullName">Name</Label>
           <Input
-            {...register("name")}
-            id="name"
+            {...register("fullName")}
+            id="fullName"
             type="text"
             placeholder="Your name"
           />
-          {errors.name && (
-            <p className="text-sm text-red-500">{errors.name.message}</p>
+          {errors.fullName && (
+            <p className="text-sm text-red-500">{errors.fullName.message}</p>
           )}
         </div>
+
+        {/* Email */}
         <div className="grid gap-2">
           <Label htmlFor="email">Email</Label>
           <Input
@@ -89,6 +85,8 @@ const SignUp = () => {
             <p className="text-sm text-red-500">{errors.email.message}</p>
           )}
         </div>
+
+        {/* Password */}
         <div className="grid gap-2">
           <Label htmlFor="password">Password</Label>
           <Input
@@ -101,6 +99,8 @@ const SignUp = () => {
             <p className="text-sm text-red-500">{errors.password.message}</p>
           )}
         </div>
+
+        {/* Sign Up button */}
         <div className="mt-4">
           <Button
             className="w-full"
