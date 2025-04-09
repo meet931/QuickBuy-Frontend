@@ -11,8 +11,7 @@ import React from "react";
 
 const colorHexMap: Record<string, string> = {
   "phantom black": "#000000",
-  "phantom silver": "#C0C0C0",
-  // add more as needed
+  "phantom silver": "#C0C0C0",  
 };
 
 const Page = ({ params }: { params: { id: string } }) => {
@@ -21,7 +20,6 @@ const Page = ({ params }: { params: { id: string } }) => {
   const dispatch = useAppDispatch();
 
   const { product, productLoading } = useFetchProductID({ id: params.id });
-  console.log("Product: ", product);
 
   const addCartHandle = () => {
     dispatch(
@@ -97,7 +95,6 @@ const Page = ({ params }: { params: { id: string } }) => {
               <div className="pb-2">
                 <h2 className="text-xl pb-2">Colors</h2>
                 <div className="flex items-center gap-2">
-                  {console.log(product.colors)}
                   {product.colors?.map((color: any, index: number) => {
                     const normalized = color.toLowerCase();
                     const hex = colorHexMap[normalized] || "#ccc"; // fallback color
@@ -140,13 +137,13 @@ const Page = ({ params }: { params: { id: string } }) => {
             >
               Add to Cart
             </Button>
-            <Button
+            {/* <Button
               variant={"destructive"}
               className="rounded-none max-sm:flex-1 w-48"
               size={"lg"}
             >
               Buy Now
-            </Button>
+            </Button> */}
           </div>
         </>
       )}

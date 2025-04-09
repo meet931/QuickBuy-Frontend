@@ -10,8 +10,10 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import { priceFormat } from "@/lib/utils";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Slider = () => {
+  const router = useRouter();
   return (
     <section className=" relative">
       <Swiper
@@ -22,12 +24,9 @@ const Slider = () => {
         loop={true}
         className="sm:h-[350px] h-[200px]"
       >
-        {slides.map((slide, index) => (
+        {slides.map((slide) => (
           <SwiperSlide key={slide.id} className="relative">
-            <Link 
-            // href={`/${slide.id}`}
-            href={`#`}
-            >
+            <Link href={`#`}>
               <figure className="h-full">
                 <Image
                   src={slide.img}
@@ -46,7 +45,7 @@ const Slider = () => {
                   </del>
                 </div>
                 <div>
-                  <Button>Buy now</Button>
+                  <Button onClick={() => router.push("/store")}>Buy now</Button>
                 </div>
               </div>
             </Link>

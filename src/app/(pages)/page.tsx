@@ -9,12 +9,7 @@ export default function Home() {
       <Slider />
       <section className="grid grid-cols-2 gap-3 my-8 w-[95vw] mx-auto">
         {homeProduct.map((item) => (
-          <Link
-            // href={`/${item.id}`}
-            href={`#`}
-            className=" shadow-lg hover:shadow-xl"
-            key={item.id}
-          >
+          <Link href={`#`} className=" shadow-lg hover:shadow-xl" key={item.id}>
             <div className="md:h-[400px] max-md:aspect-square overflow-hidden">
               <Image
                 src={item.image}
@@ -35,7 +30,6 @@ const homeProduct = [
   {
     id: "64c5dc0a0c06622dfd4f94d6",
     image:
-      // "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689935898/ecom/slider/mi-tv_xzbqid.webp",
       "https://www.cnet.com/a/img/resize/b9da980fa6b00d80e002d989e45e9ac599e371eb/hub/2024/10/28/c4575ba9-bf31-426c-861a-f12d21469dae/tcl-qm8-1.jpg?auto=webp&fit=crop&height=360&width=640",
   },
   {
@@ -46,7 +40,6 @@ const homeProduct = [
   {
     id: "64c5e1090c06622dfd4f94d9",
     image:
-      // "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689936015/ecom/slider/realme-11-pro_s8oaq4.webp",
       "https://www.cnet.com/a/img/resize/837f0073a569d6990a9c3df418828f2c7f5b983e/hub/2023/07/05/17df19a4-2eb3-4eb2-9a9e-929c40c0bb6b/untitled-1.jpg?auto=webp&fit=crop&height=720&width=1280",
   },
   {

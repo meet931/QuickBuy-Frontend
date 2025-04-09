@@ -60,16 +60,16 @@ const Filters = () => {
               <div className="flex items-center gap-4" key={sortItem.id}>
                 <input
                   type="radio"
-                  id={sortItem.field + sortItem.order}
-                  value={sortItem.order}
+                  id={sortItem.value}
+                  value={sortItem.value}
                   onChange={(e) =>
                     dispatch(
-                      setSort({ field: sortItem.field, order: e.target.value })
+                      setSort({ field: sortItem.field, order: sortItem.value })
                     )
                   }
-                  checked={sort.order === sortItem.order}
+                  checked={sort.order === sortItem.value}
                 />
-                <label htmlFor={sortItem.field + sortItem.order}>
+                <label htmlFor={sortItem.value}>
                   {sortItem.label}
                 </label>
               </div>
@@ -112,7 +112,7 @@ const Filters = () => {
               >
                 {btn}
                 <Star
-                  className="text-orange-500"
+                  className="text-orange-500 ml-0.5"
                   size={16}
                   strokeWidth={1.25}
                   absoluteStrokeWidth
@@ -123,7 +123,7 @@ const Filters = () => {
         </div>
 
         {/* ------OFFER FILTER------ */}
-        <div className="mt-8">
+        {/* <div className="mt-8">
           <h3 className="font-medium mb-4">Offer</h3>
           <div className="grid grid-cols-5 justify-items-center">
             {[10, 20, 30, 40, 50].map((offerBtn) => (
@@ -140,14 +140,14 @@ const Filters = () => {
               </button>
             ))}
           </div>
-        </div>
+        </div> */}
 
-        <div className="mt-8">
+        {/* <div className="mt-8">
           <h3 className="font-medium mb-4">Price Range</h3>
           <div>
             <Slider defaultValue={[50]} max={100} step={1} />
           </div>
-        </div>
+        </div> */}
       </aside>
     </>
   );
@@ -159,14 +159,16 @@ const sortBy = [
   {
     id: 1,
     field: "price",
-    order: "asc",
+    order: "Low to High",
     label: "Price(Low to High)",
+    value: "Low to High",
   },
   {
     id: 2,
     field: "price",
-    order: "desc",
+    order: "High to Low",
     label: "Price(High to Low)",
+    value: "High to Low"
   },
 ];
 

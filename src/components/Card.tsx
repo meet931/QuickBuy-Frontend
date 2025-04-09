@@ -18,12 +18,6 @@ const Cards = ({ product }: { product: IProduct }) => {
 
   const {    
     _id,
-    // price,
-    // title,
-    // thumbnail,
-    // discountPercentage,
-    // rating,
-    // discountPrice,
     productPrice,
     finalProductPrice,
     productName,

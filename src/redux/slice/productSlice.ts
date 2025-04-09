@@ -1,5 +1,6 @@
 import { IAllProducts, IProduct } from "@/lib/interface";
 import { createSlice } from "@reduxjs/toolkit";
+import { JSX } from "react";
 
 interface InitialState {
   allProducts: IAllProducts;
@@ -14,6 +15,10 @@ const initialState: InitialState = {
     totalPages: 0,
     totalProducts: 0,
     products: [],
+    length: 0,
+    map: function (arg0: (product: any) => JSX.Element): import("react").ReactNode {
+      throw new Error("Function not implemented.");
+    }
   },
   product: {
     _id: "",

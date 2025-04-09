@@ -12,7 +12,7 @@ const useFetchProductID = ({ id }: { id: string }) => {
       const { data } = await get(`/product/view?id=${id}`);
       return data;
     },
-    enabled: !!id, // only fetch if id exists
+    enabled: !!id,
   });
 
   useEffect(() => {

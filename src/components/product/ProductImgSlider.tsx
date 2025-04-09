@@ -7,8 +7,6 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 const ProductImgSlider = ({ images }: { images: string[] }) => {
-  console.log(images);
-  
   return (
     <div className="bg-gray-50 md:h-[calc(100vh_-_120px)] max-md:aspect-square overflow-hidden flex-1">
       <Swiper
@@ -22,7 +20,7 @@ const ProductImgSlider = ({ images }: { images: string[] }) => {
           <SwiperSlide key={index}>
             <figure className="h-full">
               <Image
-                src={img || 'default.jpg'}
+                src={img || "default.jpg"}
                 width={500}
                 height={500}
                 alt={img}

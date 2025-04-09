@@ -19,7 +19,7 @@ import { Plus, X } from "lucide-react";
 import { Minus } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useId } from "react";
+import React, { useEffect } from "react";
 
 const Page = () => {
   const { width } = useDeviceSize();
@@ -34,36 +34,7 @@ const Page = () => {
     selectCart,
     selectAll,
   } = useAppSelector((state) => state.cart);
-  const { authStatus } = useAppSelector((state) => state.user);  
-
-  // const handleCheckout = async () => {
-  //   try {
-  //     if (authStatus) {
-  //       const { data } = await axios.post("/api/payment", {
-  //         cart,
-  //       });
-
-  //       localStorage.setItem(
-  //         "order",
-  //         JSON.stringify({
-  //           items: cart,
-  //           totalQuantity,
-  //           totalPrice,
-  //         })
-  //       );
-  //       localStorage.removeItem("myCart");
-
-  //       router.push(data.url);
-  //     } else {
-  //       router.push("/signin");
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  console.log("cart: ", cart);
-  
+  const { authStatus } = useAppSelector((state) => state.user);
 
   const handleCheckout = () => {
     if (authStatus) {
@@ -82,7 +53,6 @@ const Page = () => {
       router.push("/signin");
     }
   };
-  
 
   useEffect(() => {
     dispatch(setTotal());
@@ -131,7 +101,7 @@ const Page = () => {
               )}
               <div>
                 <figure className="sm:w-28 sm:h-28 w-16 h-16">
-                  <Image                  
+                  <Image
                     src={`${process.env.NEXT_PUBLIC_BASE_URL}/${elm.img}`}
                     width={width > 640 ? 100 : 60}
                     height={width > 640 ? 100 : 60}
