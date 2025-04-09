@@ -67,7 +67,8 @@ const Page = () => {
                                 width={50}
                                 height={50}
                                 className="h-20 w-20 rounded-lg border border-gray-200 object-contain"
-                                src={product.img}
+                                src={`${process.env.NEXT_PUBLIC_BASE_URL}/${product.img}`}
+                                // src={product.img}
                                 alt={product.img}
                               />
                             </div>
@@ -100,7 +101,7 @@ const Page = () => {
           </div>
         </main>
       ) : (
-        <div>No Orders!</div>
+        <div className=" h-screen text-center p-7 text-lg">No Orders!</div>
       )}
     </>
   );

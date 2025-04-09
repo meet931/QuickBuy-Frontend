@@ -97,9 +97,9 @@ console.log(authStatus);
 
           <div className="flex items-center gap-4">
             {/* Search */}
-            <button title="Search">
+            {/* <button title="Search">
               <Search strokeWidth={1.25} />
-            </button>
+            </button> */}
 
             {/* Cart */}
             <Link href={"/cart"} title="Cart" className="relative">

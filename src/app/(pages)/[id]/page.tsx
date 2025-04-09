@@ -9,21 +9,28 @@ import { addToCart, setTotal } from "@/redux/slice/cartSlice";
 import { Star, StarHalf } from "lucide-react";
 import React from "react";
 
+const colorHexMap: Record<string, string> = {
+  "phantom black": "#000000",
+  "phantom silver": "#C0C0C0",
+  // add more as needed
+};
+
 const Page = ({ params }: { params: { id: string } }) => {
   useFetchProductID({ id: params.id });
 
   const dispatch = useAppDispatch();
 
-  const { product, productLoading } = useAppSelector((state) => state.product);
+  const { product, productLoading } = useFetchProductID({ id: params.id });
+  console.log("Product: ", product);
 
   const addCartHandle = () => {
     dispatch(
       addToCart({
         _id: product._id,
-        title: product.title,
+        title: product.productName,
         quantity: 1,
-        price: product.price,
-        img: product.thumbnail,
+        price: product.productPrice,
+        img: product.productImages?.[0] || "",
       })
     );
 
@@ -43,9 +50,13 @@ const Page = ({ params }: { params: { id: string } }) => {
       {product && (
         <>
           <div className="sm:flex block">
-            <ProductImgSlider images={product.images} />
+            <ProductImgSlider
+              images={product.productImages.map(
+                (img: string) => `${process.env.NEXT_PUBLIC_BASE_URL}/${img}`
+              )}
+            />
             <div className="flex-1 p-4">
-              <h1 className="text-4xl ">{product.title}</h1>
+              <h1 className="text-4xl ">{product.productName}</h1>
 
               {/* -----RATING----- */}
               {product.rating && (
@@ -54,21 +65,17 @@ const Page = ({ params }: { params: { id: string } }) => {
                     {product.rating}
                   </span>
                   {Array.from({ length: 5 }, (_, index) => {
-                    let num = index + 0.5;
+                    const num = index + 0.5;
                     return (
-                      <>
-                        {product.rating && (
-                          <span key={index}>
-                            {product.rating >= index + 1 ? (
-                              <Star strokeWidth={1.25} size={18} />
-                            ) : product.rating >= num ? (
-                              <StarHalf strokeWidth={1.25} size={18} />
-                            ) : (
-                              ""
-                            )}
-                          </span>
+                      <span key={index}>
+                        {product.rating >= index + 1 ? (
+                          <Star strokeWidth={1.25} size={18} />
+                        ) : product.rating >= num ? (
+                          <StarHalf strokeWidth={1.25} size={18} />
+                        ) : (
+                          ""
                         )}
-                      </>
+                      </span>
                     );
                   })}
                 </div>
@@ -76,10 +83,12 @@ const Page = ({ params }: { params: { id: string } }) => {
 
               {/* -----PRICE----- */}
               <div className="flex gap-2 py-4 items-center">
-                <span className="text-2xl">{priceFormat(product.price)}</span>
-                {product.discountPrice && (
+                <span className="text-2xl">
+                  {priceFormat(product.finalProductPrice)}
+                </span>
+                {product.productPrice && (
                   <del className="text-gray-500 ">
-                    {priceFormat(product.discountPrice)}
+                    {priceFormat(product.productPrice)}
                   </del>
                 )}
               </div>
@@ -88,25 +97,31 @@ const Page = ({ params }: { params: { id: string } }) => {
               <div className="pb-2">
                 <h2 className="text-xl pb-2">Colors</h2>
                 <div className="flex items-center gap-2">
-                  {product.colors?.map((color, index) => (
-                    <button
-                      className=" p-1 border w-32 flex items-center gap-1 rounded-md"
-                      key={index}
-                    >
-                      <span
-                        className="h-8 w-8 inline-block rounded-md"
-                        style={{ backgroundColor: color.hexCode }}
-                      ></span>
-                      <span className="break-words text-sm">{color.name}</span>
-                    </button>
-                  ))}
+                  {console.log(product.colors)}
+                  {product.colors?.map((color: any, index: number) => {
+                    const normalized = color.toLowerCase();
+                    const hex = colorHexMap[normalized] || "#ccc"; // fallback color
+
+                    return (
+                      <button
+                        className="p-1 border w-32 flex items-center gap-1 rounded-md"
+                        key={index}
+                      >
+                        <span
+                          className="h-8 w-8 inline-block rounded-md"
+                          style={{ backgroundColor: hex }}
+                        ></span>
+                        <span className="break-words text-sm">{color}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
               {/* -----HIGHLIGHTS----- */}
-              <ul className="">
+              <ul className="mt-3 text-lg">
                 <h2 className="text-xl pb-2">Highlights</h2>
-                {product.highlights?.map((highlight, index) => (
+                {product.highlights?.map((highlight: any, index: number) => (
                   <li key={index} className="pb-1">
                     <span className="inline-block w-1 h-1 bg-black rounded-full mr-2"></span>
                     {highlight}
@@ -119,7 +134,7 @@ const Page = ({ params }: { params: { id: string } }) => {
           {/* -----ADD TO CART & BUY NOW----- */}
           <div className="fixed inset-x-0 bottom-0 h-[72px] p-2 bg-white border border-t flex items-center md:justify-end justify-center gap-4 md:pr-32 sm:pr-12">
             <Button
-              className="rounded-none max-sm:flex-1 w-48 "
+              className="rounded-none max-sm:flex-1 w-48"
               size={"lg"}
               onClick={addCartHandle}
             >
