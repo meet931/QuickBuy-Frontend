@@ -1,7 +1,7 @@
+import { get } from "@/helpers/axiosInstance";
 import { useAppDispatch } from "@/redux/hooks";
 import { setProduct, setProductLoading } from "@/redux/slice/productSlice";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import React, { useEffect } from "react";
 
 const useFetchProductID = ({ id }: { id: string }) => {
@@ -9,9 +9,10 @@ const useFetchProductID = ({ id }: { id: string }) => {
 
   const { data, isLoading } = useQuery(["product", id], {
     queryFn: async () => {
-      const { data } = await axios.get(`/api/products/${id}`);
+      const { data } = await get(`/product/view?id=${id}`);
       return data;
     },
+    enabled: !!id, // only fetch if id exists
   });
 
   useEffect(() => {
@@ -19,7 +20,9 @@ const useFetchProductID = ({ id }: { id: string }) => {
     dispatch(setProduct(data));
   }, [data, dispatch, isLoading]);
 
-  return data;
+  // Returning both product and loading state for flexibility
+  return {product: data, productLoading: isLoading};
 };
 
 export default useFetchProductID;
+

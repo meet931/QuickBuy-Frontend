@@ -33,17 +33,11 @@ npm install
 3. Create a `.env.local` file in the root directory and add the following environment variables:
 
 ```bash
-MONGODB_URI= # your MongoDB connection string
-NEXT_PUBLIC_FIREBASE_API_KEY= # your firebase api key
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN= # your firebase auth domain
-NEXT_PUBLIC_FIREBASE_PROJECT_ID= # your firebase project id
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET= # your firebase storage bucket
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID= # your firebase messaging sender id
-NEXT_PUBLIC_FIREBASE_APP_ID= # your firebase app id
-
-PAYMENT_URL= # http://localhost:3000
-STRIPE_SECRET_KEY= # your Stripe secret key
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY= # your Stripe public key
+NEXT_PUBLIC_BASE_URL= # your backend url
+CONNECTION= # your MongoDB connection string
+SECRET= # your secret key
+PORT= # backend port
+HOST=localhost
 ```
 
 4. Run the development server:

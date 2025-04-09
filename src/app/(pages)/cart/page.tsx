@@ -34,33 +34,55 @@ const Page = () => {
     selectCart,
     selectAll,
   } = useAppSelector((state) => state.cart);
-  const { authStatus } = useAppSelector((state) => state.user);
+  const { authStatus } = useAppSelector((state) => state.user);  
 
-  const handleCheckout = async () => {
-    try {
-      if (authStatus) {
-        const { data } = await axios.post("/api/payment", {
-          cart,
-        });
+  // const handleCheckout = async () => {
+  //   try {
+  //     if (authStatus) {
+  //       const { data } = await axios.post("/api/payment", {
+  //         cart,
+  //       });
 
-        localStorage.setItem(
-          "order",
-          JSON.stringify({
-            items: cart,
-            totalQuantity,
-            totalPrice,
-          })
-        );
-        localStorage.removeItem("myCart");
+  //       localStorage.setItem(
+  //         "order",
+  //         JSON.stringify({
+  //           items: cart,
+  //           totalQuantity,
+  //           totalPrice,
+  //         })
+  //       );
+  //       localStorage.removeItem("myCart");
 
-        router.push(data.url);
-      } else {
-        router.push("/signin");
-      }
-    } catch (error) {
-      console.log(error);
+  //       router.push(data.url);
+  //     } else {
+  //       router.push("/signin");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  console.log("cart: ", cart);
+  
+
+  const handleCheckout = () => {
+    if (authStatus) {
+      localStorage.setItem(
+        "order",
+        JSON.stringify({
+          items: cart,
+          totalQuantity,
+          totalPrice,
+        })
+      );
+      dispatch(removeCart(cart));
+      localStorage.removeItem("myCart");
+      router.push("/checkout");
+    } else {
+      router.push("/signin");
     }
   };
+  
 
   useEffect(() => {
     dispatch(setTotal());
