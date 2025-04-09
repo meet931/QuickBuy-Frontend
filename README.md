@@ -8,7 +8,7 @@ The Next.js shopping app is a simple e-commerce application that uses Next.js, R
 
 - Responsive and user-friendly interface
 - Product listing and filtering by category
-- Shopping cart and checkout functionality -->
+- Shopping cart and checkout functionality
 - Data fetching and storage with MongoDB
 - Styling with Tailwind CSS
 - Deployment with Vercel
