@@ -3,7 +3,7 @@
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setTotal } from "@/redux/slice/cartSlice";
 import clsx from "clsx";
-import { ChevronRight, Menu, Search, ShoppingBag, User, X } from "lucide-react";
+import { ChevronRight, Menu, ShoppingBag, User, X } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -17,9 +17,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { setAuthStatus } from "@/redux/slice/userSlice";
-// import { signOut } from "firebase/auth";
-// import { auth } from "@/lib/firebase";
-// import { setAuthStatus } from "@/redux/slice/userSlice";
 
 const links = [
   {
@@ -50,12 +47,12 @@ const links = [
   {
     _id: "6",
     path: "/store/smartWatch",
-    name: "Smart Watch",    
+    name: "Smart Watch",
   },
   {
     _id: "7",
     path: "/store/tablet",
-    name: "Tablet",    
+    name: "Tablet",
   },
 ];
 
@@ -65,12 +62,11 @@ const Header = () => {
   const dispatch = useAppDispatch();
   const { totalQuantity } = useAppSelector((state) => state.cart);
   const { authStatus, user } = useAppSelector((state) => state.user);
-console.log(authStatus);
 
-  const handleSignOut = () => {    
-    dispatch(setAuthStatus(false));    
+  const handleSignOut = () => {
+    dispatch(setAuthStatus(false));
     localStorage.clear();
-  }
+  };
 
   useEffect(() => {
     dispatch(setTotal());
@@ -96,11 +92,6 @@ console.log(authStatus);
           </ul>
 
           <div className="flex items-center gap-4">
-            {/* Search */}
-            {/* <button title="Search">
-              <Search strokeWidth={1.25} />
-            </button> */}
-
             {/* Cart */}
             <Link href={"/cart"} title="Cart" className="relative">
               <ShoppingBag strokeWidth={1.25} />
@@ -133,9 +124,6 @@ console.log(authStatus);
                       <Link href={"/orders"}>Orders</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem
-                      // onClick={() => {
-                      //   signOut(auth), dispatch(setAuthStatus(false));
-                      // }}
                       onClick={handleSignOut}
                       className="cursor-pointer"
                     >
@@ -204,9 +192,6 @@ console.log(authStatus);
               <Button
                 variant={"ghost"}
                 className="justify-start px-0"
-                // onClick={() => {
-                //   signOut(auth), dispatch(setAuthStatus(false));
-                // }}
                 onClick={handleSignOut}
               >
                 Sign Out

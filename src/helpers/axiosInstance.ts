@@ -2,27 +2,21 @@ import axios from 'axios';
 
 const getToken = () => localStorage.getItem('token');
 
-// Create an Axios instance
+// Creating an Axios instance
 const axiosInstance = axios.create({
-  // baseURL: 'http://localhost:3500', // Your API base URL
-  // baseURL: 'http://192.168.43.127:3500', // Meet 
   baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}`,
   withCredentials: true,
 });
 
-// Add a request interceptor to set the Authorization header if the token is available
+// Adding a request interceptor to set the Authorization header if the token is available
 axiosInstance.interceptors.request.use(
-  (config) => {
-    // console.log("Congfig", config)
-    const token = getToken();
-    // console.log("Retrieved Token:", token); 
+  (config) => {    
+    const token = getToken();    
 
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     } else {      
-      delete config.headers['Authorization']; // Removed header if no token
-      // console.log("Token is not available")
-      // window.location.href = '/(auth)/login'; // Redirect if no token
+      delete config.headers['Authorization'];
     }
     return config;
   },
@@ -45,8 +39,7 @@ const request = async (method: any, url: any, data = {}, headers = {}) => {
     });
 
     return response.data;
-  } catch (error: any) {
-    // Handle error
+  } catch (error: any) {    
     if (error.response) {
       // Server responded with a status other than 2xx
       console.error('Error Response:', error.response.data);

@@ -11,17 +11,21 @@ import { useAppDispatch } from "@/redux/hooks";
 import { get } from "@/helpers/axiosInstance";
 
 const useFetchProducts = (query: string) => {
-  
+
   const dispatch = useAppDispatch();
 
   // Fetch All Products (Unfiltered)
   const { isLoading, data } = useQuery(["products"], {
 
-    queryFn: async (): Promise<IAllProducts[]> => {      
-      const { data } = await get(`/product/view`);
-      return data;
+    queryFn: async (): Promise<IAllProducts[]> => {
+      try {
+        const { data } = await get(`/product/view`);
+        return data;
+      } catch (error) {
+        console.error("Error fetching all products:", error);
+        return [];
+      }
     },
-    
     refetchOnWindowFocus: false,
   });
 
@@ -30,10 +34,14 @@ const useFetchProducts = (query: string) => {
     ["products", query],
     {
       queryFn: async (): Promise<IAllProducts[]> => {
-        // const { data } = await axios.get(`/api/products/all?limit=12${query}`);
-        const { data } = await get(`/product/view${query}`);
 
-        return data;
+        try {
+          const { data } = await get(`/product/view${query}`);
+          return data;
+        } catch (error) {
+          console.error("Error fetching filtered products:", error);
+          return [];
+        }
       },
       enabled: !!query,
       refetchOnWindowFocus: false,
@@ -43,10 +51,10 @@ const useFetchProducts = (query: string) => {
   useEffect(() => {
     if (query) {
       dispatch(setAllProductLoading(filterLoading));
-      dispatch(setAllProducts(filterData));
+      dispatch(setAllProducts(filterData || []));
     } else {
       dispatch(setAllProductLoading(isLoading));
-      dispatch(setAllProducts(data));
+      dispatch(setAllProducts(data || []));
     }
   }, [dispatch, data, query, filterData, filterLoading, isLoading]);
 

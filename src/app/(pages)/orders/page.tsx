@@ -19,8 +19,8 @@ const Page = () => {
   return (
     <>
       {orders !== null ? (
-        <main className="mx-auto my-4 max-w-6xl px-2 md:my-6 md:px-0">
-          <h2 className="text-3xl font-bold">Order Details</h2>
+        <main className="mx-auto my-4 max-w-6xl px-2 md:my-6 md:px-0 h-screen">
+          <h2 className="text-3xl font-bold mb-10">Order Details</h2>
           <div className="mt-3 text-sm">
             Check the status of recent and old orders & discover more products
           </div>
@@ -68,7 +68,6 @@ const Page = () => {
                                 height={50}
                                 className="h-20 w-20 rounded-lg border border-gray-200 object-contain"
                                 src={`${process.env.NEXT_PUBLIC_BASE_URL}/${product.img}`}
-                                // src={product.img}
                                 alt={product.img}
                               />
                             </div>

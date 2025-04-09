@@ -17,30 +17,14 @@ const StoreLayout = ({ children }: { children: React.ReactNode }) => {
     (state) => state.filter
   );
 
-  // const idFilter = brand.length > 0 ? `&brands=${brand.join("&brands=")}` : "";
-  // const brandFilter = brand.length > 0 ? `&brands=${brand.join("&brands=")}` : "";
-  // const catFilter =
-  //   params.filter === "all"
-  //     ? ""
-  //     : params.filter
-  //     ? `&category=${params.filter}`
-  //     : "";
-  // const sortFilter = sort.order !== "" ? `${(sort.field = sort.order)}` : "";
-  // const ratingFilter = rating !== "" ? `&rating=${rating}` : "";
-  // // const offerFilter = offer !== "" ? `&discountPercentage=${offer}` : "";
-
-  // useFetchProducts(`${brandFilter}${ratingFilter}${catFilter}${sortFilter}`);
-  // useFetchProducts(`${brandFilter}${catFilter}${ratingFilter}${offerFilter}`);
-
   const queryString = buildQueryString({
-    brands: brand,
+    brands: brand.length ? brand : undefined,
     rating,
     category: params.filter !== "all" ? params.filter : undefined,
-    sort: sort.order !== "" ? `${sort.field}:${sort.order}` : undefined,
+    sort: sort.order || undefined,
   });
-  
+
   useFetchProducts(queryString);
-  
 
   return (
     <main className="overflow-hidden">
@@ -63,14 +47,20 @@ const StoreLayout = ({ children }: { children: React.ReactNode }) => {
 
 export default StoreLayout;
 
-const buildQueryString = (params: Record<string, string | string[] | undefined>) => {
+export const buildQueryString = (
+  params: Record<string, string | string[] | undefined>
+) => {
   const query = Object.entries(params)
-    .filter(([_, value]) => value !== undefined && value !== "" && value.length !== 0)
-    .flatMap(([key, value]: any) =>
-      Array.isArray(value)
-        ? value.map((v) => `${key}=${encodeURIComponent(v)}`)
-        : [`${key}=${encodeURIComponent(value)}`]
-    )
+    .filter(([_, value]) => {
+      if (Array.isArray(value)) return value.length > 0;
+      return value !== undefined && value !== "";
+    })
+    .map(([key, value]) => {
+      if (Array.isArray(value)) {
+        return `${key}=${value.join(",")}`;
+      }
+      return `${key}=${value}`;
+    })
     .join("&");
 
   return query ? `?${query}` : "";
