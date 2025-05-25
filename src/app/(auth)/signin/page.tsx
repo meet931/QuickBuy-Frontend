@@ -15,7 +15,7 @@ const Page = () => {
     <main className="grid grid-cols-1 md:grid-cols-2 h-[100dvh]">
       <section className="grid justify-center content-center">
         <div className="space-y-1">
-          <h2 className="text-2xl font-medium">Welcome back to dev.shopp</h2>
+          <h2 className="text-2xl font-medium">Welcome back to QuickBuy</h2>
           <p className="py-2">
             {"Don't"} have an account
             <Link href={"/signup"} className="underline ml-1">
